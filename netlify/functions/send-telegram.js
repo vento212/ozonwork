@@ -5,10 +5,10 @@ exports.handler = async (event, context) => {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  
+  // Получаем токен и Chat ID из переменных окружения Netlify
+  // Triggering a re-deploy to apply environment variables
   const { BOT_TOKEN, CHAT_ID } = process.env;
   
-
   const data = JSON.parse(event.body);
 
   const { firstName, lastName, email, contact } = data;
