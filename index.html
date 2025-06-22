@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OZON! Работа</title>
+    <link rel="icon" type="image/jpeg" href="logovkladka.jpeg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(45deg, #005BFF, #00BFFF);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .animated-background {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .stripe, .stripe2, .stripe3, .stripe-text {
+            display: none !important;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            z-index: 20;
+            backdrop-filter: blur(10px);
+            transform: translateY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .logo h1 {
+            color: #005BFF;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-button {
+            background-color: #005BFF;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .job-button:hover {
+            background-color: #0046CC;
+            transform: scale(1.02);
+        }
+
+        .job-button:active {
+            transform: scale(0.98);
+        }
+
+        .job-button::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .job-button:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(100, 100);
+                opacity: 0;
+            }
+        }
+
+        .form-container {
+            display: none;
+            margin-top: 1.5rem;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            z-index: 21;
+            position: relative;
+        }
+
+        .form-container.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #E5E5E5;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #005BFF;
+            box-shadow: 0 0 0 3px rgba(0, 91, 255, 0.1);
+        }
+
+        .submit-button {
+            background-color: #005BFF;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #0046CC;
+            transform: scale(1.02);
+        }
+
+        .submit-button:active {
+            transform: scale(0.98);
+        }
+
+        .stripe {
+            position: absolute;
+            width: 140vw;
+            height: 60px;
+            background: rgba(255,255,255,0.7);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            border-radius: 30px;
+            z-index: 10;
+            border: 2px solid red;
+        }
+        .stripe-main {
+            left: -20vw;
+            top: 40vh;
+            transform: rotate(30deg);
+        }
+        .stripe-cross {
+            left: -20vw;
+            top: 60vh;
+            transform: rotate(-30deg);
+        }
+        .stripe-text {
+            font-size: 40px;
+            font-weight: bold;
+            color: #005BFF;
+            opacity: 0.7;
+            white-space: nowrap;
+            letter-spacing: 32px;
+            width: 200vw;
+            display: block;
+            animation: moveStripeText 8s linear infinite;
+        }
+        @keyframes moveStripeText {
+            0% { transform: translateX(-60vw); }
+            100% { transform: translateX(0vw); }
+        }
+
+        .ozon-bg {
+            position: absolute;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .ozon-fade {
+            position: absolute;
+            color: #fff;
+            opacity: 0.6;
+            font-weight: bold;
+            user-select: none;
+            animation: ozonFade 14s ease-in-out infinite;
+            transition: opacity 0.7s, transform 0.7s;
+            text-shadow: 0 4px 24px #005BFF, 0 1px 2px #005BFF, 0 0 2px #005BFF;
+        }
+        @keyframes ozonFade {
+            0% { opacity: 0; transform: scale(0.95); }
+            15% { opacity: 0.6; transform: scale(1); }
+            85% { opacity: 0.6; transform: scale(1); }
+            100% { opacity: 0; transform: scale(1.05); }
+        }
+
+        .ozon-logo-top {
+            position: fixed;
+            top: 24px;
+            left: 32px;
+            width: 120px;
+            height: auto;
+            z-index: 100;
+            user-select: none;
+            pointer-events: none;
+        }
+
+        .ozon-header {
+            position: fixed;
+            top: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fff;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+            border-radius: 18px;
+            padding: 16px 40px 16px 32px;
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            z-index: 100;
+            min-width: 340px;
+        }
+        .ozon-logo-center {
+            width: 120px;
+            height: auto;
+            display: block;
+        }
+        .ozon-city-select {
+            font-size: 1.1rem;
+            padding: 8px 18px;
+            border-radius: 8px;
+            border: 1px solid #e5e5e5;
+            background: #f7f7f7;
+            color: #005BFF;
+            font-weight: 500;
+            outline: none;
+            transition: border 0.2s, box-shadow 0.3s, background 0.3s, color 0.3s;
+            box-shadow: 0 0 0 0 rgba(0,91,255,0);
+        }
+        .ozon-city-select:focus {
+            border: 1.5px solid #005BFF;
+            background: #eaf2ff;
+            color: #003a99;
+            box-shadow: 0 0 0 4px rgba(0,91,255,0.10);
+        }
+        .ozon-header.city-animate {
+            animation: citySelectPop 0.6s cubic-bezier(.22,1.12,.62,.99);
+            box-shadow: 0 8px 32px 0 rgba(0,91,255,0.18);
+        }
+        @keyframes citySelectPop {
+            0% { transform: translateX(-50%) scale(1); }
+            20% { transform: translateX(-50%) scale(1.06) rotate(-1deg); }
+            40% { transform: translateX(-50%) scale(0.98) rotate(1deg); }
+            60% { transform: translateX(-50%) scale(1.04); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+        @media (max-width: 600px) {
+            .ozon-header {
+                flex-direction: column;
+                gap: 12px;
+                padding: 12px 10px;
+                min-width: 0;
+            }
+            .ozon-logo-center {
+                width: 90px;
+            }
+            .ozon-city-select {
+                width: 100%;
+            }
+        }
+        .ozon-header-hide {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+        .about-block {
+            margin-top: 2rem;
+            background: #f7faff;
+            border-radius: 10px;
+            box-shadow: 0 2px 12px rgba(0,91,255,0.06);
+            padding: 1.5rem 1.2rem;
+            text-align: center;
+            display: none;
+            position: relative;
+        }
+        .about-block.active {
+            display: block;
+        }
+        .about-btn {
+            margin-top: 1.2rem;
+            background: #fff;
+            color: #005BFF;
+            border: 2px solid #005BFF;
+            border-radius: 8px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1.08rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, border 0.2s;
+        }
+        .about-btn:hover {
+            background: #005BFF;
+            color: #fff;
+        }
+        .close-about {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: transparent;
+            border: none;
+            color: #005BFF;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        .close-about:hover {
+            color: #ff3b3b;
+        }
+        .about-block h2 {
+            color: #005BFF;
+            margin-bottom: 0.7rem;
+            font-size: 1.5rem;
+        }
+        .about-block p {
+            color: #333;
+            font-size: 1.08rem;
+            line-height: 1.5;
+        }
+        .about-btn-wrapper {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        .success-message {
+            margin-top: 1.5rem;
+            background: #eaf6ff;
+            border: 1.5px solid #b3e0ff;
+            border-radius: 10px;
+            color: #005BFF;
+            font-size: 1.15rem;
+            padding: 1.2rem 1rem;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 2px 12px rgba(0,91,255,0.06);
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="ozon-header" id="ozonHeader">
+        <img src="logo.png" alt="Ozon logo" class="ozon-logo-center" />
+        <select class="ozon-city-select" id="ozonCitySelect">
+            <option>Москва</option>
+            <option>Санкт-Петербург</option>
+            <option>Казань</option>
+            <option>Екатеринбург</option>
+            <option>Новосибирск</option>
+            <option>Краснодар</option>
+            <option>Воронеж</option>
+            <option>Самара</option>
+            <option>Уфа</option>
+            <option>Челябинск</option>
+        </select>
+    </div>
+    <audio id="dropSound" preload="auto">
+        <source src="sounds/drop.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="animated-background">
+        <div class="ozon-bg">
+            <span class="ozon-fade" style="top:8%;left:6%;animation-delay:0s;font-size:2.2rem;">Ozon</span>
+            <span class="ozon-fade" style="top:18%;left:80%;animation-delay:1.2s;font-size:2.7rem;">Ozon</span>
+            <span class="ozon-fade" style="top:10%;left:60%;animation-delay:2.1s;font-size:2.1rem;">Ozon</span>
+            <span class="ozon-fade" style="top:80%;left:12%;animation-delay:0.7s;font-size:2.5rem;">Ozon</span>
+            <span class="ozon-fade" style="top:85%;left:70%;animation-delay:2.7s;font-size:2.9rem;">Ozon</span>
+            <span class="ozon-fade" style="top:60%;left:5%;animation-delay:1.8s;font-size:2.3rem;">Ozon</span>
+            <span class="ozon-fade" style="top:70%;left:80%;animation-delay:0.5s;font-size:2.6rem;">Ozon</span>
+            <span class="ozon-fade" style="top:5%;left:40%;animation-delay:2.3s;font-size:2.2rem;">Ozon</span>
+            <span class="ozon-fade" style="top:90%;left:85%;animation-delay:1.1s;font-size:2.8rem;">Ozon</span>
+            <span class="ozon-fade" style="top:25%;left:5%;animation-delay:0.9s;font-size:2.4rem;">Ozon</span>
+            <span class="ozon-fade" style="top:75%;left:2%;animation-delay:2.5s;font-size:2.1rem;">Ozon</span>
+            <span class="ozon-fade" style="top:60%;left:90%;animation-delay:1.6s;font-size:2.7rem;">Ozon</span>
+            <span class="ozon-fade" style="top:35%;left:15%;animation-delay:0.8s;font-size:2.3rem;">Ozon</span>
+            <span class="ozon-fade" style="top:45%;left:75%;animation-delay:1.7s;font-size:2.5rem;">Ozon</span>
+            <span class="ozon-fade" style="top:55%;left:50%;animation-delay:2.2s;font-size:2.1rem;">Ozon</span>
+            <span class="ozon-fade" style="top:30%;left:60%;animation-delay:0.4s;font-size:2.6rem;">Ozon</span>
+            <span class="ozon-fade" style="top:65%;left:35%;animation-delay:1.9s;font-size:2.4rem;">Ozon</span>
+            <span class="ozon-fade" style="top:40%;left:25%;animation-delay:2.4s;font-size:2.2rem;">Ozon</span>
+            <span class="ozon-fade" style="top:15%;left:55%;animation-delay:1.1s;font-size:2.3rem;">Ozon</span>
+            <span class="ozon-fade" style="top:50%;left:10%;animation-delay:2.8s;font-size:2.7rem;">Ozon</span>
+            <span class="ozon-fade" style="top:85%;left:45%;animation-delay:0.6s;font-size:2.5rem;">Ozon</span>
+            <span class="ozon-fade" style="top:70%;left:60%;animation-delay:1.3s;font-size:2.2rem;">Ozon</span>
+        </div>
+    </div>
+    <div class="container">
+        <div class="logo">
+            <h1>Ozon</h1>
+        </div>
+        <button class="job-button" onclick="playSoundAndToggle()">Устроиться на работу</button>
+        <div class="about-btn-wrapper">
+            <button class="about-btn" id="aboutBtn" onclick="showAboutBlock()">О нас</button>
+        </div>
+        <div class="about-block" id="aboutBlock">
+            <button class="close-about" onclick="closeAboutBlock()">✕</button>
+            <h2>О нас</h2>
+            <p>OZON — одна из крупнейших компаний в России, предоставляющая возможности для профессионального роста и развития. Присоединяйтесь к нашей команде!</p>
+        </div>
+        <div class="form-container" id="jobForm">
+            <form id="applicationForm">
+                <div class="form-group">
+                    <label for="firstName">Имя</label>
+                    <input type="text" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Фамилия</label>
+                    <input type="text" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="contact">Телеграм</label>
+                    <input type="tel" id="contact" name="contact" required>
+                </div>
+                <button type="submit" class="submit-button" onclick="playSound()">Подать заявку</button>
+            </form>
+        </div>
+        <div class="success-message" id="successMessage"></div>
+    </div>
+
+    <script>
+        function playSound() {
+            const audio = document.getElementById('dropSound');
+            audio.currentTime = 0;
+            audio.play();
+        }
+
+        function playSoundAndToggle() {
+            playSound();
+            toggleForm();
+            document.querySelector('.ozon-header').classList.add('ozon-header-hide');
+        }
+
+        function toggleForm() {
+            const form = document.getElementById('jobForm');
+            form.classList.toggle('active');
+            if (!form.classList.contains('active')) {
+                document.querySelector('.ozon-header').classList.remove('ozon-header-hide');
+            }
+        }
+
+        document.getElementById('applicationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            playSound();
+            
+            // Получаем данные формы
+            var formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                contact: document.getElementById('contact').value
+            };
+            
+            // Отправляем данные на сервер
+            fetch('/.netlify/functions/send-telegram', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    var name = formData.firstName;
+                    var message = name + ', спасибо, что оставили заявку, с вами скоро свяжутся.';
+                    document.getElementById('successMessage').textContent = message;
+                    document.getElementById('successMessage').style.display = 'block';
+                    this.reset();
+                    document.getElementById('jobForm').classList.remove('active');
+                    document.querySelector('.ozon-header').classList.remove('ozon-header-hide');
+                } else {
+                    alert('Ошибка отправки заявки. Попробуйте еще раз.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Ошибка отправки заявки. Попробуйте еще раз.');
+            });
+        });
+
+        const select = document.getElementById('ozonCitySelect');
+        const header = document.getElementById('ozonHeader');
+        select.addEventListener('change', () => {
+            header.classList.add('city-animate');
+            setTimeout(() => header.classList.remove('city-animate'), 600);
+        });
+
+        function showAboutBlock() {
+            document.getElementById('aboutBlock').classList.add('active');
+            document.getElementById('aboutBtn').style.display = 'none';
+        }
+        function closeAboutBlock() {
+            document.getElementById('aboutBlock').classList.remove('active');
+            document.getElementById('aboutBtn').style.display = 'inline-block';
+        }
+    </script>
+</body>
+</html> 
