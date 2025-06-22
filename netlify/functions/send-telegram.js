@@ -6,8 +6,14 @@ exports.handler = async (event, context) => {
   }
 
   // Получаем токен и Chat ID из переменных окружения Netlify
-  // Triggering a re-deploy to apply environment variables
   const { BOT_TOKEN, CHAT_ID } = process.env;
+
+  // --- НАЧАЛО ДИАГНОСТИКИ ---
+  console.log('--- DIAGNOSTIC LOGS ---');
+  console.log('BOT_TOKEN:', BOT_TOKEN ? `Найден, длина: ${BOT_TOKEN.length}` : 'НЕ НАЙДЕН');
+  console.log('CHAT_ID:', CHAT_ID ? `Найден, значение: ${CHAT_ID}` : 'НЕ НАЙДЕН');
+  console.log('--- END DIAGNOSTIC LOGS ---');
+  // --- КОНЕЦ ДИАГНОСТИКИ ---
   
   const data = JSON.parse(event.body);
 
